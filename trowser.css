@@ -1,0 +1,25 @@
+/* CSS declarations go here */
+#map-canvas {
+    width: 400px;
+    height: 400px;
+}
+
+#map {
+    top:100px;
+    position: absolute; 
+    left:720px;
+}
+
+#map_filter {
+    top:10px;
+    position: absolute; 
+    left:720px;
+}
+
+#list {
+    overflow:scroll;
+    top:100px;
+    position: absolute; 
+    height:400px;
+    width:700px
+}

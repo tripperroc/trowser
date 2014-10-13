@@ -1,0 +1,53 @@
+<head>
+  <title>trowser</title>
+    <script type="text/javascript"
+        src="http://maps.google.com/maps/api/js?v=3.13&key=AIzaSyCjkR_p4Bb_pferGnbdud1oXHnl4fqU6n0&sensor=false">
+    </script>
+</head>
+
+<body>
+
+{{> map_filter }}
+
+{{> tweets}}
+
+{{> map}}
+
+</body>
+
+<template name="hello">
+ <button>Click Me</button>
+  <p>You've pressed the button {{counter}} times.</p>
+</template>
+
+<template name="map_filter">
+<div id="map_filter">
+   Min clique size: <input type="text" id="min_clique" name="min_clique" class="cliques" value="{{min_clique}}"><br>
+   Min edge width: <input type="text" class="cliques" id="min_width" name="edge_width" value="{{min_width}}">
+</div>
+</template>
+
+<template name = "tweets">
+<div id = "list" >
+  <table>
+  {{#each twitter}}
+    <tr><td>{{created_at}}</td>
+     <td> <b>{{user.screen_name}}</b> </td>
+    <td>{{text}}</td> </tr>
+  {{/each}}
+   
+ {{#if moreResults}}
+    <tr>
+    <div id="showMoreResults" style="margin-left: 25px;">
+        <span class="loading">Loading...</span>
+    </div>
+    </tr>
+ {{/if}}
+   </table>
+</div>
+</template>
+<template name="map">
+<div id = "map">
+<div id = "map-canvas"></div>
+</div>
+</template>
