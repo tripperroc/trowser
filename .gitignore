@@ -1,4 +1,7 @@
 *.pkl
 *.json
 *.pdf
-
+.idea/
+*.log
+*.log.*
+mongodb/
