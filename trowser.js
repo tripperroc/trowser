@@ -114,10 +114,13 @@ gmaps = {
         this.markers[c.id] = [gMarker, center];
         this.addToMarker(this.googleMarker, c.size, center);
         this.addToMarker(this.googleMarker, c.size, gMarker);
+
 	google.maps.event.addListener(gMarker, 'click', function() {
 	    Session.set('itemsLimit', 20);
 	    Session.set('clique', c.clique);
+	    console.log(c.clique);
 	});
+
 	gMarker.setMap (this.map);
 	center.setMap (this.map);
 	return gMarker;
@@ -195,6 +198,7 @@ if (Meteor.isClient) {
       });
   }
 
+  
   Template.map.rendered = function() {
     if (! Session.get('map'))
         gmaps.initialize();
@@ -205,13 +209,14 @@ if (Meteor.isClient) {
 	  var edge_sub = Meteor.subscribe('edges', Session.get('min_clique'), Session.get('min_width') );
 
           cs = Cliques.find({tweets: { $gt: 0 }, size: {$gt: Session.get('min_clique')}}).fetch();
-	  console.log(Session.get("min_clique") + " vs " + Session.get("min_clique_last"));
+	 // console.log(Session.get("min_clique") + " vs " + Session.get("min_clique_last"));
 	  if (Session.get("min_clique") != Session.get("min_clique_last")) {
 	      console.log("clearing markers");
 	      gmaps.clearMarkers(gmaps.googleMarker,  Session.get("min_clique_last"), Session.get("min_clique")); 
 	      Session.set("min_clique_last", Session.get("min_clique"));
 	  }
 	  
+	  console.log ("Min size: " +  Session.get('min_clique'));
 	  console.log ("Query size: " + cs.length);
 	  _.each(cs, function(c) {
 	      
@@ -250,11 +255,7 @@ if (Meteor.isClient) {
     Session.set('map', false);
   }
 
-  Template.hello.helpers({
-    counter: function () {
-      return Session.get("counter");
-    }
-  });
+ 
 
   Template.map_filter.helpers ({
       min_clique: function () {
@@ -266,15 +267,28 @@ if (Meteor.isClient) {
   });
 
   Template.tweets.twitter = function () {
-      return Twitter.find();
+     // return Twitter.find();
+    var clique = Session.get("min_clique");
+   
+   if (clique.length > 0) {
+	    return Twitter.find({players : {$in: clique}, num_players : {$gt: 1}}, {sort: {time_s:1}, limit:limit});
+	    //return Twitter.find({screen_name : {$in: clique}}, {sort: {time_s:1}, limit:Session.get("itemsLimit")});
+    }
+    else return Twitter.find({}, {sort: {time_s:1}, limit:Session.get("itemsLimit")});
   }
 
+  Template.tweets_info.names = function () {
+      return Session.get("clique").join(", ");
+     
+  }
   Template.tweets.moreResults = function() {
-      return !(Twitter.find().count() < Session.get("itemsLimit"));
+      console.log("Items Count: " +Session.get("itemsLimit"));
+      console.log("Items Count: " + Template.tweets.twitter().count());
+      return !(Template.tweets.twitter().count() < Session.get("itemsLimit"));
   }
 
   Template.tweets.one = function () {
-      return Twitter.findOne();
+      // return Twitter.findOne();
   }
 
   Template.map_filter.events({
@@ -328,7 +342,8 @@ if (Meteor.isServer) {
 
      Meteor.publish("twitter", function(limit, clique) {
 	if (clique.length > 0) {
-	    return Twitter.find({user_id : {$in: clique}}, {limit:limit});
+	    //return Twitter.find({players : {$in: clique}}, {sort: {time_s:1}, limit:limit});
+	    return Twitter.find({players : {$in: clique}, num_players : {$gt: 1}}, {sort: {time_s:1}, limit:limit});
 	}
 	else
 	      return Twitter.find({}, {limit:limit});

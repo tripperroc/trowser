@@ -16,6 +16,14 @@
     left:720px;
 }
 
+#list_info {
+    overflow:scroll;
+    top:10px;
+    position: absolute; 
+    height:390px;
+    width:700px
+
+}
 #list {
     overflow:scroll;
     top:100px;

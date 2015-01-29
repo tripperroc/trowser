@@ -58,12 +58,19 @@ class clique:
 
     def mean_t (self):
         return safediv(self.mean_lat, self.count)
-     
-def invert (c):
+
+def lookup (x, user_names):
+    if x in user_names:
+        return user_names[x]
+    else:
+        return str(x)
+
+def invert (c, user_names):
     d = collections.defaultdict (list)
     e = list()
     
     for cliq in c:
+        cliq = map(lambda x: lookup(x,user_names), cliq)
         cl = clique(cliq)
         #print len(cliq)
         for node in cliq:
@@ -76,6 +83,7 @@ def main():
     global ug
     global c
     dg = pickle.load(open(sys.argv[1]))
+    user_names = pickle.load(open(sys.argv[3]))
     # dg <= nx.DiGraph 
 
     ug = dg.to_undirected(reciprocal=True)
@@ -86,7 +94,7 @@ def main():
 
     
     
-    d, cliques = invert (c)
+    d, cliques = invert (c, user_names)
     #cliques = collections.defaultdict(clique)
     f = file (sys.argv[2])
     while True:
@@ -95,7 +103,7 @@ def main():
             break
        # print line
         j = json.loads(line)
-        for cliq in d[int(j["user"]["id_str"])]:
+        for cliq in d[j["user"]["screen_name"]]:
             cliq.add(j)
     f.close()
 

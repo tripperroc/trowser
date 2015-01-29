@@ -15,7 +15,7 @@ def main():
         j = json.loads(line)
         if "user" in j:
             if "id" in j["user"]:
-                j["user_id"] = j["user"]["id"]
+                j["screen_name"] = j["user"]["screen_name"]
                 sys.stdout.write("%s\n" % json.dumps(j))
     f.close()
 

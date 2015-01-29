@@ -1,0 +1,11 @@
+//db.twitter.find( { 'created_at' : { $type: 3 } }).forEach( function (x) { x.created_at = new Date(x.created_at); db.twitter.save(x); });
+//db.twitter.ensureIndex( { created_at : 1})
+db.twitter.ensureIndex( {players: 1})
+db.twitter.ensureIndex({limit: 1})
+db.twitter.ensureIndex({time_s: 1})
+db.twitter.ensureIndex( { screen_name : 1} )
+db.twitter.ensureIndex( { num_players : 1} )
+db.cliques.ensureIndex( { id : 1} )
+db.cliques.ensureIndex( { size : 1} )
+db.edges.ensureIndex( {width: 1} )
+db.edges.ensureIndex( {size: 1} )
