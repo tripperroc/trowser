@@ -1,4 +1,4 @@
-TWITTERFILE=../trowser3/oneyear.json
+TWITTERFILE=oneyear.json
 GRAPHFILE=social_graph.json
 
 #cliques.pkl: $(GRAPHFILE)
