@@ -1,33 +1,22 @@
-**trowser**
+# In
+# Install mongodb at: 
 
-To build this, install mongodb at: 
+# Install meteor at: 
 
-> http://www.mongodb.org
+# Create default mongo directory
+sudo mkdir -p /data/db
 
-Install meteor at: 
+# Start up mongodb 
+mongod --fork --logpath mongodb.log
 
-> https://www.meteor.com
+# Run Makefile
+make all
 
-Create default mongo directory
+# Set MONGO_URL environment variable
+export MONGO_URL=mongodb://localhost:27017/trowser
 
-> sudo mkdir -p /data/db
+# In a separate shell run meteor server
+meteor
 
-Start up mongodb
-
->sudo ongod --fork --logpath mongodb.log
-
-Run Makefile
-
-> make all
-
-Set MONGO_URL environment variable
-
-> export MONGO_URL=mongodb://localhost:27017/trowser
-
-Run meteor server
-
-> meteor
-
-Connect to local meteor database
-
-> http://localhost:3000
+# connect to local meteor database
+# http://localhost:3000

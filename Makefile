@@ -8,7 +8,7 @@ clean:
 	rm social_graph.pkl cliques.json clique_graph_edges.json twitter_user_id.json twitter_user_id_sorted.json user_dict.pkl twitter_user_players.json mongocliques mongoedges mongoimport mongotwitter
 
 # This will generate a large number of ValueErrors. Don't worry about them
-social_graph.pkl: $(GRAPHFILE)
+social_graph.pkl:
 	python -OO readgraph.py $(GRAPHFILE)
 
 user_dict.pkl: twitter_user_id_sorted.json

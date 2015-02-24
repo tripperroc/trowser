@@ -7,6 +7,8 @@
 
 <body>
 
+{{> tweets_info }}
+
 {{> map_filter }}
 
 {{> tweets}}
@@ -15,18 +17,17 @@
 
 </body>
 
-<template name="hello">
- <button>Click Me</button>
-  <p>You've pressed the button {{counter}} times.</p>
-</template>
-
 <template name="map_filter">
 <div id="map_filter">
    Min clique size: <input type="text" id="min_clique" name="min_clique" class="cliques" value="{{min_clique}}"><br>
    Min edge width: <input type="text" class="cliques" id="min_width" name="edge_width" value="{{min_width}}">
 </div>
 </template>
-
+<template name = "tweets_info">
+<div id = "list_info">
+  {{names}}
+</div>
+</template>
 <template name = "tweets">
 <div id = "list" >
   <table>
