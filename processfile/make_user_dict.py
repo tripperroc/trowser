@@ -1,4 +1,4 @@
-# Filters twitter json file text field 
+# Filters twitter json file text field
 # python -OO twep.py TWITTER_FILE REGEX
 
 import sys
@@ -23,7 +23,7 @@ def main():
         else:
             print line
     f.close()
-    f = open ("user_dict.pkl", 'w')
+    f = open ("data/user_dict.pkl", 'w')
     pickle.dump(d, f)
 if __name__ == "__main__":
     main()
