@@ -1,10 +1,10 @@
 **trowser**
 
-To build this, install mongodb at: 
+To build this, install mongodb at:
 
 > http://www.mongodb.org
 
-Install meteor at: 
+Install meteor at:
 
 > https://www.meteor.com
 
@@ -14,7 +14,7 @@ Create default mongo directory
 
 Start up mongodb
 
->sudo ongod --fork --logpath mongodb.log
+>sudo mongod --fork --logpath log/mongodb.log
 
 Run Makefile
 
