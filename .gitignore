@@ -4,6 +4,5 @@
 .idea/
 *.log
 *.log.*
-mongodb/
 mongo*
 .meteor/
