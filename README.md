@@ -14,7 +14,7 @@ Create default mongo directory
 
 Start up mongodb
 
->sudo mongod --fork --logpath log/mongodb.log
+>mongod --fork --logpath log/mongodb.log
 
 Run Makefile
 
