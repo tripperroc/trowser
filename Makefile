@@ -6,7 +6,7 @@ PROCESSFILE=processfile/
 all: mongosetup
 
 clean:
-	rm $(TWITTERDATA)social_graph.pkl $(TWITTERDATA)cliques.json $(TWITTERDATA)clique_graph_edges.json $(TWITTERDATA)twitter_user_id.json $(TWITTERDATA)twitter_user_id_sorted.json $(TWITTERDATA)user_dict.pkl $(TWITTERDATA)twitter_user_players.json mongocliques mongoedges mongoimport mongotwitter
+	rm $(TWITTERDATA)social_graph.pkl $(TWITTERDATA)cliques.json $(TWITTERDATA)clique_graph_edges.json $(TWITTERDATA)twitter_user_id.json $(TWITTERDATA)twitter_user_id_sorted.json $(TWITTERDATA)user_dict.pkl $(TWITTERDATA)twitter_user_players.json mongocliques mongoedges mongoimport mongotwitter dropit
 
 # This will generate a large number of ValueErrors. Don't worry about them
 $(TWITTERDATA)social_graph.pkl: $(GRAPHFILE)
@@ -35,18 +35,22 @@ mongotwitter: $(TWITTERDATA)twitter_user_players.json
 	mongoimport --drop --db trowser --collection twitter $(TWITTERDATA)twitter_user_players.json
 	touch mongotwitter
 
-mongocliques: $(TWITTERDATA)cliques.json
+mongocliques: $(TWITTERDATA)cliques.json dropit
 	mongoimport --drop --db trowser --collection cliques $(TWITTERDATA)cliques.json  # preprocessed w/ my script
 	touch mongocliques
 
-mongoedges:  $(TWITTERDATA)clique_graph_edges.json
+mongoedges:  $(TWITTERDATA)clique_graph_edges.json dropit
 	mongoimport --drop --db trowser --collection edges $(TWITTERDATA)clique_graph_edges.json  # preprocessed w/ my script
 	touch mongoedges
 
-mongoimport: mongotwitter mongocliques mongoedges
+mongoimport: mongotwitter mongocliques mongoedges dropit
 	touch mongoimport
 
 mongosetup: mongoimport
 	mongo localhost:27017/trowser mongosetup
 	touch mongosetup
+
+dropit: dropit
+	mongo localhost:27017/trowser --eval "db.dropDatabase()"
+	touch dropit
 
